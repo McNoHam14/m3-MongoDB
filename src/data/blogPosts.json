@@ -1,0 +1,70 @@
+[
+  {
+    "title": "Ben test article",
+    "category": "Category1",
+    "content": "<p></p>",
+    "cover": "https://picsum.photos/200/300",
+    "readTime": { "value": "5", "unit": "mins" },
+    "author": {
+      "name": "Ben McMahon",
+      "avatar": "https://picsum.photos/200/300"
+    },
+    "createdAt": "2023-03-07T15:48:11.450Z",
+    "id": "ek26ta4vleyfdwe3",
+    "comments": []
+  },
+  {
+    "title": "Ben test article",
+    "category": "Category1",
+    "content": "<p></p>",
+    "cover": "https://res.cloudinary.com/dbvkzlgoz/image/upload/v1678717190/strive/xrfsyfgdigqznc3uqucs.webp",
+    "readTime": { "value": "5", "unit": "mins" },
+    "author": {
+      "name": "Ben McMahon",
+      "avatar": "https://picsum.photos/200/300"
+    },
+    "createdAt": "2023-03-07T15:48:12.560Z",
+    "id": "ek26ta4vleyfdx8w",
+    "updatedAt": "2023-03-13T14:19:51.209Z",
+    "comments": []
+  },
+  {
+    "title": "w2 test",
+    "category": "Category1",
+    "content": "<p></p>",
+    "cover": "https://picsum.photos/200/300",
+    "readTime": { "value": "10", "unit": "mins" },
+    "author": {
+      "name": "Eli McMahon",
+      "avatar": "https://picsum.photos/200/300"
+    },
+    "id": "ek26t1z89lf1fc8o5",
+    "createdAt": "2023-03-09T18:10:12.580Z",
+    "updatedAt": "2023-03-09T18:10:12.580Z",
+    "comments": []
+  },
+  {
+    "category": "new blog post",
+    "title": "ARTICLE TITLE",
+    "cover": "https://picsum.photos/200/300",
+    "readTime": { "value": 2, "unit": "minute" },
+    "author": { "name": "AUTHOR AVATAR NAME", "avatar": "AUTHOR AVATAR LINK" },
+    "content": "HTML",
+    "createdAt": "2023-03-14T14:35:24.956Z",
+    "id": "ek26t1e0lf8cv9ul",
+    "updatedAt": "2023-03-14T14:35:24.956Z",
+    "comments": []
+  },
+  {
+    "category": "new blog post",
+    "title": "ARTICLE TITLE",
+    "cover": "https://picsum.photos/200/300",
+    "readTime": { "value": 2, "unit": "minute" },
+    "author": { "name": "AUTHOR AVATAR NAME", "avatar": "AUTHOR AVATAR LINK" },
+    "content": "HTML",
+    "createdAt": "2023-03-14T14:41:20.796Z",
+    "id": "ek26t22ulf8d2wf1",
+    "updatedAt": "2023-03-14T14:41:20.796Z",
+    "comments": []
+  }
+]
