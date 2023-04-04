@@ -1,11 +1,4 @@
-// CRUD endpoints
-
 import Express from "express";
-import fs, { writeFile } from "fs";
-import { dirname, join, extname } from "path";
-import { fileURLToPath } from "url";
-import uniqid from "uniqid";
-import createHttpError from "http-errors";
 // import { checkAuthorsSchema, triggerBadRequest } from "../validation.js";
 import {
   getAuthors,
@@ -16,6 +9,8 @@ import {
 import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import { v2 as cloudinary } from "cloudinary";
+import { AuthorsModel } from "../model.js";
+import q2m from "query-to-mongo";
 
 const cloudStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
@@ -24,95 +19,50 @@ const cloudStorage = new CloudinaryStorage({
   },
 });
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, publicFolderPath);
-//   },
-//   filename: function (req, file, cb) {
-//     const filename = req.params.authorId + extname(file.originalname);
-//     cb(null, filename);
-//   },
-// });
-
 const upload = multer({ storage: cloudStorage });
 
 const authorsRouter = Express.Router();
 
-console.log(getAuthors());
+authorsRouter.post("/", async (req, res, next) => {
+  try {
+    const newAuthor = new AuthorsModel(req.body);
+    const { _id } = await newAuthor.save();
+    res.status(201).send({ _id });
+  } catch (error) {
+    next(error);
+  }
+});
 
-// POST (new author)
+authorsRouter.get("/", async (req, res, next) => {
+  try {
+    const query = q2m(req.query);
+    const authorsArray = await AuthorsModel.find(
+      query.criteria,
+      query.options.fields
+    );
+    res.send(authorsArray);
+  } catch (error) {
+    next(error);
+  }
+});
 
-// authorsRouter.post(
-//   "/",
-//   checkAuthorsSchema,
-//   triggerBadRequest,
-//   async (req, res, next) => {
-//     try {
-//       const newAuthor = {
-//         ...req.body,
-//         createdAt: new Date(),
-//         updatedAt: new Date(),
-//         id: uniqid(),
-//       };
-
-//       const authorsArray = await getAuthors();
-
-//       const emailInUse = authorsArray.some(
-//         (author) => author.email === req.body.email
-//       );
-
-//       if (!emailInUse) {
-//         authorsArray.push(newAuthor);
-//         await writeAuthors(authorsArray);
-
-//         res.status(201).send({
-//           name: newAuthor.name + " " + newAuthor.surname,
-//           id: newAuthor.id,
-//         });
-//       } else {
-//         next(
-//           createHttpError(
-//             400,
-//             `${req.body.email} is already registered to another user `
-//           )
-//         );
-//       }
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
-
-// // GET (all authors)
-
-// authorsRouter.get("/", async (req, res, next) => {
-//   try {
-//     const authorsArray = await getAuthors();
-//     res.send(authorsArray);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
-// // GET (single author)
-
-// authorsRouter.get("/:authorId", async (req, res, next) => {
-//   try {
-//     const authorsArray = await getAuthors();
-//     const foundAuthor = authorsArray.find(
-//       (author) => author.id === req.params.authorId
-//     );
-//     if (foundAuthor) {
-//       res.send(foundAuthor);
-//     } else {
-//       next(
-//         createHttpError(404, `Author with id ${req.params.authorId} not found`)
-//       );
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+authorsRouter.get("/:authorId", async (req, res, next) => {
+  try {
+    const authorsArray = await getAuthors();
+    const foundAuthor = authorsArray.find(
+      (author) => author.id === req.params.authorId
+    );
+    if (foundAuthor) {
+      res.send(foundAuthor);
+    } else {
+      next(
+        createHttpError(404, `Author with id ${req.params.authorId} not found`)
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 // // PUT
 
